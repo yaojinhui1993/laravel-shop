@@ -39,6 +39,7 @@
                                 <div class="product-content">
                                     <div class="top">
                                         <div class="img">
+                                            <a href="{{ route('products.show', ['product' => $product->id ]) }}"></a>
                                             <img src="{{ $product->image_url }}" alt="" srcset="">
                                         </div>
                                         <div class="price">
@@ -46,6 +47,7 @@
                                         </div>
                                         <div class="title">
                                             {{ $product->title }}
+                                            <a href="{{ route('products.show', ['product' => $product->id ]) }}">{{ $product->title }}</a>
                                         </div>
                                     </div>
 
