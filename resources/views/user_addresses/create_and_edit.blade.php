@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', '新增收货地址')
+@section('title', ($address->id ? '修改' : '新增') . '收货地址')
 
 @section('content')
     <div class="row">
@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="text-center">
-                        新增收货地址
+                        {{ $address->id ? '修改' : '新增' }}收货地址
                     </h2>
                 </div>
 
@@ -26,9 +26,15 @@
                     {{-- 输出后端报错结束 --}}
                     {{-- inline-template 代表通过内联方式引入组件 --}}
                     <user-addresses-create-and-edit inline-template>
+                        @if($address->id)
+                        <form class="form-horizontal" role="form" action="{{ route('user_addresses.update', ['userAddress' => $address->id]) }}" method="POST">
+                            {{ method_field('PUT') }}
+                        @else
                         <form class="form-horizontal" role="form" action="{{ route('user_addresses.store') }}" method="POST">
+                        @endif
+                            {{ csrf_field() }}
                             {{-- inline-template 代表通过内联方式引入组件 --}}
-                            <select-district inline-template @change="onDistrictChanged">
+                            <select-district inline-template @change="onDistrictChanged" :init-value="{{ json_encode([old('province', $address->province), old('city', $address->city), old('district', $address->district)]) }}">
                                 <div class="form-group row">
                                     <label class="col-form-label col-sm-2 text-md-right">省市区</label>
 
@@ -59,7 +65,6 @@
                             <input type="hidden" name="province" v-model="province">
                             <input type="hidden" name="city" v-model="city">
                             <input type="hidden" name="district" v-model="district">
-                            {{ csrf_field() }}
 
                             <div class="form-group row">
                                 <label class="col-form-label text-md-right col-sm-2">详细地址</label>
