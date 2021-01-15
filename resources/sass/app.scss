@@ -293,3 +293,48 @@ body {
         }
     }
 }
+
+.orders-index-page {
+    .list-group-item {
+        font-size: 12px;
+        border: none;
+        padding: 0;
+        margin-bottom: 15px;
+        .panel {
+            margin: 0;
+            .card-body {
+                padding: 0;
+            }
+        }
+        .table {
+            margin: 0;
+            tr[rowspan] {
+                border-left: 1px solid #DDD;
+            }
+        }
+        .product-info {
+            display: flex;
+            flex-direction: row;
+            .preview {
+                img {
+                    max-width: 80px;
+                    max-height: 80px;
+                }
+                border: 1px solid #EEE;
+                margin-right: 5px;
+            }
+            .product-title, .sku-title {
+                display: block;
+            }
+            .product-title > a {
+                color: #3C3C3C;
+            }
+            .sku-title {
+                color: #9E9E9E;
+            }
+        }
+        .total-amount {
+            font-weight: bolder;
+        }
+    }
+}
