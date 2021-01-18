@@ -3,8 +3,9 @@
 return [
     'alipay' => [
         'app_id' => '2021000117601748',
-        'notify_url' => 'http://larvelshop.test/alipay/notify',
-        'return_url' => 'http://laravelshop.test/alipay/return',
+        'notify_url' => 'http://larvelshop.test/payment/alipay/return',
+        // 'notify_url' => 'http://requestbin.net/r/sst3n6ss',
+        'return_url' => 'http://laravelshop.test/payment/alipay/return',
         'ali_public_key' => app_path('cert/alipayCertPublicKey_RSA2.crt'),
         'app_cert_public_key' => app_path('cert/appCertPublicKey_2021000117601748.crt'),
         'alipay_root_cert' => app_path('cert/alipayRootCert.crt'),
