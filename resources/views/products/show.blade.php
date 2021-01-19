@@ -58,20 +58,44 @@
                             </div>
                         </div>
 
-                        <div class="product-detail">
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a href="#product-detail-tab" class="nav-link active" aria-controls="product-detail-tab" role="tab" data-toggle="tab" aria-seleted="true">商品详情</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#product-reviews-tab" class="nav-link" aria-controls="product-reviews-tab" role="tab" data-toggle="tab" aria-selected="false">用户评价</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" role="tabpane" id="product-detail-tab">
-                                    {!! $product->description !!}
-                                </div>
-                                <div class="tab-pane" id="product-reviews-tab" role="tabpane"></div>
+
+                    </div>
+                    <div class="product-detail">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a href="#product-detail-tab" class="nav-link active" aria-controls="product-detail-tab" role="tab" data-toggle="tab" aria-seleted="true">商品详情</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#product-reviews-tab" class="nav-link" aria-controls="product-reviews-tab" role="tab" data-toggle="tab" aria-selected="false">用户评价</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" role="tabpane" id="product-detail-tab">
+                                {!! $product->description !!}
+                            </div>
+                            <div class="tab-pane" id="product-reviews-tab" role="tabpane">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td>用户</td>
+                                            <td>商品</td>
+                                            <td>评分</td>
+                                            <td>评价</td>
+                                            <td>时间</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($reviews as $review)
+                                        <tr>
+                                            <td>{{ $review->order->user->name }}</td>
+                                            <td>{{ $review->productSku->title }}</td>
+                                            <td>{{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</td>
+                                            <td>{{ $review->review }}</td>
+                                            <td>{{ $review->reviewed_at->format('Y-m-d H:i') }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
