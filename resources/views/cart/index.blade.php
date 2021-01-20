@@ -188,7 +188,10 @@
                             content: $(html)[0],
                             icon: 'error'
                         });
-                    } else {
+                    } else if (error.response.status === 403) {// 这里判断状态 403
+                        swal(error.response.data.msg, '', 'error');
+                    }
+                    else {
                         // 其它情况应该是系统挂了
                         swal('系统错误', '', 'error');
                     }

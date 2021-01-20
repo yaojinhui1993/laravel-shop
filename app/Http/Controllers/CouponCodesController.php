@@ -18,7 +18,7 @@ class CouponCodesController extends Controller
             abort(404);
         }
 
-        $record->checkAvailable();
+        $record->checkAvailable(request()->user());
 
         return $record;
     }
