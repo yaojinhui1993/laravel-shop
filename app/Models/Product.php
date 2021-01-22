@@ -50,6 +50,6 @@ class Product extends Model
 
     public function crowdfunding()
     {
-        return $this->hasOn(CrowdfundingProduct::class);
+        return $this->hasOne(CrowdfundingProduct::class);
     }
 }
