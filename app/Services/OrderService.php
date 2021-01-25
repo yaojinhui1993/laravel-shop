@@ -181,6 +181,12 @@ class OrderService
                     ]);
                 }
                 break;
+            case 'installment':
+                $order->update([
+                    'refund_no' => Order::getAvailableRefundNo(), // 生成退款订单
+                    'refund_status' => Order::REFUND_STATUS_PROCESSING, // 将退款状态改为退款中
+                ]);
+                break;
             default:
                 throw new InternalException('未知订单支付方式：' . $order->payment_method);
                 break;
