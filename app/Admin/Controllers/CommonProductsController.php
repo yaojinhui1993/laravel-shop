@@ -58,6 +58,8 @@ abstract class CommonProductsController extends AdminController
         $form->image('image', '封面图片')->rules('required|image');
         $form->quill('description', '商品描述')->rules('required');
         $form->radio('on_sale', '上架')->options(['1' => '是', '0' => '否'])->default(0);
+        $form->text('title', '商品名称')->rules('required');
+        $form->text('long_title', '商品长标题')->rules('required');
 
         // 调用自定义方法
         $this->customForm($form);
