@@ -160,6 +160,38 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- 猜你喜欢开始 --}}
+                    @if(count($similar) > 0)
+                        <div class="similar-products">
+                            <div class="title">猜你喜欢</div>
+                            <div class="raw products-list">
+                                {{-- 这里不能使用 $product 作为 foreach 出来的变量，否则会覆盖掉当前页面的 $product 变量 --}}
+                                @foreach ($similar as $p)
+                                    <div class="col-3 product-item">
+                                        <div class="product-content">
+                                            <div class="top">
+                                                <div class="img">
+                                                    <a href="{{ route('products.show', ['product' => $p->id]) }}">
+                                                        <img src="{{ $p->image_url }}" alt="">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="price">
+                                                <b>￥</b> {{ $p->price }}
+                                            </div>
+                                            <div class="title">
+                                                <a href="{{ route('products.show', ['product' => $p->id]) }}">
+                                                    {{ $p->title }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                    {{-- 猜你喜欢结束 --}}
                 </div>
             </div>
         </div>

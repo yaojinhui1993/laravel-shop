@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use App\Services\ProductService;
 use App\Exceptions\InvalidRequestException;
 use App\SearchBuilders\ProductSearchBuilder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -77,9 +78,7 @@ class ProductsController extends Controller
         $productIds = collect($result['hits']['hits'])->pluck('_id')->all();
         // 通过 whereIn 方法从数据库中读取商品数据
         $products = Product::query()
-            ->whereIn('id', $productIds)
-            // orderByRaw 可以让我们用原生的 SQL 来给查询结果排序
-            ->orderByRaw(sprintf("FIND_IN_SET(id, '%s')", join(',', $productIds)))
+            ->byIds($productIds)
             ->get();
 
         // 返回一个 LengthAwarePaginator 对象
@@ -117,7 +116,7 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function show(Product $product, Request $request)
+    public function show(Product $product, Request $request, ProductService $service)
     {
         // 判断商品是否已经上架，如果没有上架则抛出异常
         if (! $product->on_sale) {
@@ -133,6 +132,7 @@ class ProductsController extends Controller
             $favored = boolval($user->favoriteProducts()->find($product->id));
         }
 
+
         $reviews = OrderItem::query()
             ->with(['order.user', 'productSku']) // 预先加载关联关系
             ->where('product_id', $product->id)
@@ -141,10 +141,16 @@ class ProductsController extends Controller
             ->limit(10) // 取出 10 条
             ->get();
 
+        $similarProductIds = $service->getSimilarProductIds($product, 4);
+        $similarProducts = Product::query()
+            ->byIds($similarProductIds)
+            ->get();
+
         return view('products.show', [
             'product' => $product,
             'favored' => $favored,
             'reviews' => $reviews,
+            'similar' => $similarProducts,
         ]);
     }
 

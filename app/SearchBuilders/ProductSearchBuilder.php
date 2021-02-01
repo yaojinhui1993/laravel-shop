@@ -103,6 +103,29 @@ class ProductSearchBuilder
         return $this;
     }
 
+    /**
+     * 添加一个按商品属性筛选的条件
+     *
+     * @param [type] $name
+     * @param [type] $value
+     * @return void
+     */
+    public function propertyFilter($name, $value)
+    {
+        $this->params['body']['query']['bool']['filter'][] = [
+            'nested' => [
+                'path' => 'properties',
+                'query' => [
+                    [
+                        'term' => [
+                            'properties.search_value' => $name . ':' . $value
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     // 添加排序
     public function orderBy($field, $direction)
     {
@@ -121,5 +144,12 @@ class ProductSearchBuilder
     public function getParams()
     {
         return $this->params;
+    }
+
+    public function minShouldMatch($count)
+    {
+        $this->params['body']['query']['bool']['minimum__should_match'] = (int)$count;
+
+        return $this;
     }
 }
