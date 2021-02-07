@@ -12,7 +12,7 @@ class SyncProducts extends Command
      *
      * @var string
      */
-    protected $signature = 'es:sync-properties';
+    protected $signature = 'es:sync-properties --index={products}';
 
     /**
      * The console command description.
